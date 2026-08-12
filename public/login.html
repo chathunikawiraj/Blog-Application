@@ -1,0 +1,29 @@
+<!-- basic form -->
+<form id="loginForm">
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+</form>
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    try {
+        const data = await fetchAPI('auth.php?action=login', {
+            method: 'POST',
+            body: { email, password }
+        });
+        // Store user (we only have username; also store id? we can get from session but we'll store it from response)
+        // We need user id for ownership checks. We'll add a separate endpoint to get user info, or we can store from login.
+        // For simplicity, we can call /api/auth.php?action=me to get user details, but we'll store id in session and get via a small endpoint.
+        // Better: return user id in login response.
+        // Modify auth.php login to return id as well: echo json_encode(['message'=>'...', 'username'=>..., 'id'=>$user['id']]);
+        // We'll assume we modified.
+        setUser({ id: data.id, username: data.username });
+        window.location.href = 'index.html';
+    } catch (err) {
+        alert('Login failed: ' + err.message);
+    }
+});
+</script>

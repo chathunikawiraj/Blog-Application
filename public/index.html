@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="editor.html" id="newPostLink">New Post</a>
+            <span id="authLinks">
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+            </span>
+            <span id="userInfo" style="display:none;">
+                <span id="usernameDisplay"></span>
+                <button id="logoutBtn">Logout</button>
+            </span>
+        </nav>
+    </header>
+    <main>
+        <h1>All Blogs</h1>
+        <div id="blogList"></div>
+        <div id="pagination"></div>
+    </main>
+    <script src="js/app.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

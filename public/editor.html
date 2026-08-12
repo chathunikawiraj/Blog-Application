@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Editor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>...</header>
+    <main>
+        <h1 id="editorTitle">Create New Blog</h1>
+        <form id="blogForm">
+            <input type="text" id="titleInput" placeholder="Blog Title" required>
+            <textarea id="markdownEditor"></textarea>
+            <button type="submit" id="saveBtn">Save</button>
+            <button type="button" id="cancelBtn">Cancel</button>
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/editor.js"></script>
+</body>
+</html>
