@@ -3,6 +3,7 @@ require_once 'config.php';
 
 $action = $_GET['action'] ?? '';
 
+// === REGISTER ===
 if ($action === 'register') {
     $data = json_decode(file_get_contents('php://input'), true);
     $username = $data['username'] ?? '';
@@ -29,7 +30,7 @@ if ($action === 'register') {
     exit;
 }
 
-// Login
+// === LOGIN (FIXED – includes 'id') ===
 if ($action === 'login') {
     $data = json_decode(file_get_contents('php://input'), true);
     $email = $data['email'] ?? '';
@@ -44,7 +45,11 @@ if ($action === 'login') {
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
-        echo json_encode(['message' => 'Login successful', 'username' => $user['username']]);
+        echo json_encode([
+            'message' => 'Login successful',
+            'id' => $user['id'],           // ✅ NOW INCLUDED
+            'username' => $user['username']
+        ]);
     } else {
         http_response_code(401);
         echo json_encode(['error' => 'Invalid credentials']);
@@ -53,10 +58,13 @@ if ($action === 'login') {
     exit;
 }
 
-// Logout
+// === LOGOUT ===
 if ($action === 'logout') {
     session_destroy();
     echo json_encode(['message' => 'Logged out']);
     exit;
 }
+
+http_response_code(400);
+echo json_encode(['error' => 'Invalid action']);
 ?>

@@ -3,29 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Home</title>
+    <title>Fashion.Design - Fashion Blog</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- ===== HEADER ===== -->
     <header>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="editor.html" id="newPostLink">New Post</a>
-            <span id="authLinks">
-                <a href="login.html">Login</a>
-                <a href="register.html">Register</a>
-            </span>
-            <span id="userInfo" style="display:none;">
-                <span id="usernameDisplay"></span>
-                <button id="logoutBtn">Logout</button>
-            </span>
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="navbar-brand">Fashion.<span>Design</span></a>
+                <div class="navbar-nav">
+                    <a href="index.html">Home</a>
+                    <a href="editor.html" id="newPostLink" style="display:none;">New Post</a>
+                    <span id="authLinks">
+                        <a href="login.html">Login</a>
+                        <a href="register.html">Register</a>
+                    </span>
+                    <span id="userInfo" style="display:none;">
+                        <a href="#" id="usernameDisplay"></a>
+                        <a href="#" id="logoutBtn" style="color:#e74c3c;">Logout</a>
+                    </span>
+                </div>
+            </div>
         </nav>
+        <div class="banner">
+            <div class="container">
+                <h1 class="banner-title">
+                    <span>Fashion.</span> Design Blog
+                </h1>
+                <p>everything that you want to know about fashion & design</p>
+            </div>
+        </div>
     </header>
-    <main>
-        <h1>All Blogs</h1>
-        <div id="blogList"></div>
-        <div id="pagination"></div>
-    </main>
+    <!-- ===== END HEADER ===== -->
+
+    <!-- ===== DESIGN SECTION (Static - shows categories) ===== -->
+    <section class="design" id="design">
+        <div class="container">
+            <div class="title">
+                <h2>Recent Fashion & Design</h2>
+                <p>explore the latest trends</p>
+            </div>
+            <div class="design-content">
+                <div class="design-item">
+                    <div class="design-img">
+                        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=400&fit=crop" alt="Fashion">
+                        <span>Fashion</span>
+                        <span><i class="far fa-heart"></i> 24</span>
+                    </div>
+                    <div class="design-title">
+                        <a href="#">minimalist street style for 2024</a>
+                    </div>
+                </div>
+                <div class="design-item">
+                    <div class="design-img">
+                        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=400&fit=crop" alt="Design">
+                        <span>Design</span>
+                        <span><i class="far fa-heart"></i> 18</span>
+                    </div>
+                    <div class="design-title">
+                        <a href="#">sustainable fashion: the future</a>
+                    </div>
+                </div>
+                <div class="design-item">
+                    <div class="design-img">
+                        <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&h=400&fit=crop" alt="Art">
+                        <span>Art</span>
+                        <span><i class="far fa-heart"></i> 32</span>
+                    </div>
+                    <div class="design-title">
+                        <a href="#">the art of color in fashion</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===== END DESIGN ===== -->
+
+    <!-- ===== BLOG LIST SECTION ===== -->
+    <section class="blog" id="blog">
+        <div class="container">
+            <div class="title">
+                <h2>Latest Blog Posts</h2>
+                <p>recent thoughts from our community</p>
+            </div>
+            <div id="blogList" class="blog-content"></div>
+            <div id="pagination" style="display:flex; justify-content:center; gap:0.5rem; margin-top:2rem;"></div>
+        </div>
+    </section>
+    <!-- ===== END BLOG LIST ===== -->
+
+    <!-- ===== ABOUT SECTION ===== -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1501238295340-c810d3c156d5?w=600" alt="About">
+                </div>
+                <div class="about-text">
+                    <div class="title">
+                        <h2>About Fashion.Design</h2>
+                        <p>fashion & design is our passion</p>
+                    </div>
+                    <p>Welcome to Fashion.Design Blog – a vibrant community where creativity, fashion, and design come together. Whether you're a designer, artist, or enthusiast, this is your space to share inspiration, discover trends, and connect with like-minded creatives.</p>
+                    <p>Built with ❤️ using HTML, CSS, JavaScript, PHP & MySQL. Join us and start sharing your story today!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===== END ABOUT ===== -->
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+        <span>&copy; 2026 Fashion.Design Blog | All Rights Reserved</span>
+    </footer>
+    <!-- ===== END FOOTER ===== -->
+
     <script src="js/app.js"></script>
     <script src="js/home.js"></script>
 </body>

@@ -1,4 +1,4 @@
-const API_BASE = '../api/';  // adjust if needed
+const API_BASE = '/blog-app/api/';
 
 async function fetchAPI(endpoint, options = {}) {
     const url = API_BASE + endpoint;
@@ -17,9 +17,6 @@ async function fetchAPI(endpoint, options = {}) {
     return response.json();
 }
 
-// Check login status by trying to fetch user info (we can use session)
-// Since we use PHP sessions, we can have a /api/auth.php?action=check endpoint.
-// For simplicity, we'll store user in localStorage after login.
 function getCurrentUser() {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
@@ -33,32 +30,54 @@ function clearUser() {
     localStorage.removeItem('user');
 }
 
-// UI helpers to show/hide auth links
 function updateNav() {
     const user = getCurrentUser();
     const authLinks = document.getElementById('authLinks');
     const userInfo = document.getElementById('userInfo');
     const usernameDisplay = document.getElementById('usernameDisplay');
+    const newPostLink = document.getElementById('newPostLink');
+
     if (user) {
-        authLinks.style.display = 'none';
-        userInfo.style.display = 'inline';
-        usernameDisplay.textContent = user.username;
+        if (authLinks) authLinks.style.display = 'none';
+        if (userInfo) {
+            userInfo.style.display = 'inline';
+            if (usernameDisplay) usernameDisplay.textContent = user.username;
+        }
+        if (newPostLink) newPostLink.style.display = 'inline';
     } else {
-        authLinks.style.display = 'inline';
-        userInfo.style.display = 'none';
+        if (authLinks) authLinks.style.display = 'inline';
+        if (userInfo) userInfo.style.display = 'none';
+        if (newPostLink) newPostLink.style.display = 'none';
     }
 }
 
-// Logout
+async function logoutUser() {
+    try {
+        await fetchAPI('auth.php?action=logout', { method: 'POST' });
+        clearUser();
+        updateNav();
+        window.location.href = 'index.html';
+    } catch (err) {
+        console.error('Logout error:', err);
+        clearUser();
+        updateNav();
+        window.location.href = 'index.html';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    updateNav();
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', async () => {
-            await fetchAPI('auth.php?action=logout', { method: 'POST' });
-            clearUser();
-            updateNav();
-            window.location.href = 'index.html';
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logoutUser();
         });
     }
-    updateNav();
 });
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}

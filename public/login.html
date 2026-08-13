@@ -1,29 +1,142 @@
-<!-- basic form -->
-<form id="loginForm">
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <button type="submit">Login</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion.Design - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .auth-container {
+            max-width: 450px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+        }
+        .auth-container h2 {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .auth-container input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        .auth-container input:focus {
+            border-color: #2b2b2b;
+            outline: none;
+        }
+        .auth-container .btn-submit {
+            width: 100%;
+            background: #2b2b2b;
+            color: #fff;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .auth-container .btn-submit:hover {
+            background: #555;
+        }
+        .auth-container .auth-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .auth-container .auth-link a {
+            color: #2b2b2b;
+            font-weight: 600;
+        }
+        #loginError {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="navbar-brand">Fashion.Design</a>
+                <div class="navbar-nav">
+                    <a href="index.html">Home</a>
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Register</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="blog" style="padding-top:2rem; padding-bottom:4rem;">
+        <div class="container">
+            <div class="auth-container">
+                <h2>Welcome Back</h2>
+                <form id="loginForm">
+                    <input type="email" id="email" placeholder="Email Address" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit" class="btn-submit">Login</button>
+                    <div id="loginError"></div>
+                </form>
+                <div class="auth-link">
+                    Don't have an account? <a href="register.html">Register</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+        <span>&copy; 2026 Fashion.Design Blog | All Rights Reserved</span>
+    </footer>
+
+    <script src="js/app.js"></script>
 <script>
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    try {
-        const data = await fetchAPI('auth.php?action=login', {
-            method: 'POST',
-            body: { email, password }
-        });
-        // Store user (we only have username; also store id? we can get from session but we'll store it from response)
-        // We need user id for ownership checks. We'll add a separate endpoint to get user info, or we can store from login.
-        // For simplicity, we can call /api/auth.php?action=me to get user details, but we'll store id in session and get via a small endpoint.
-        // Better: return user id in login response.
-        // Modify auth.php login to return id as well: echo json_encode(['message'=>'...', 'username'=>..., 'id'=>$user['id']]);
-        // We'll assume we modified.
-        setUser({ id: data.id, username: data.username });
-        window.location.href = 'index.html';
-    } catch (err) {
-        alert('Login failed: ' + err.message);
-    }
-});
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errorDiv = document.getElementById('loginError');
+        const submitBtn = document.querySelector('.btn-submit');
+        
+        // Clear previous errors
+        errorDiv.textContent = '';
+
+        try {
+            // ✅ Show loading state
+            submitBtn.textContent = 'Logging in...';
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+
+            const data = await fetchAPI('auth.php?action=login', {
+                method: 'POST',
+                body: { email, password }
+            });
+            
+            setUser({ id: data.id, username: data.username });
+            window.location.href = 'index.html';
+        } catch (err) {
+            // ✅ Reset button on error
+            submitBtn.textContent = 'Login';
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            errorDiv.textContent = err.message || 'Login failed. Please try again.';
+        }
+    });
 </script>
+</body>
+</html>
