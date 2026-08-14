@@ -18,24 +18,32 @@ async function loadBlogs(page = 1) {
             return;
         }
 
-        data.blogs.forEach(blog => {
+        data.blogs.forEach(function(blog) {
             const div = document.createElement('div');
             div.className = 'blog-item';
+
+            // ✅ Use the thumbnail from the API (first image extracted)
+            const thumbnail = blog.thumbnail || 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600';
+            
+            // ✅ Use the excerpt from the API (plain text, no Markdown)
+            const excerpt = blog.excerpt || blog.content.substring(0, 150) + '...';
+
             div.innerHTML = `
                 <div class="blog-img">
-                    <img src="https://images.unsplash.com/photo-${Math.floor(Math.random() * 20) + 1}?w=600&h=400&fit=crop" alt="${escapeHtml(blog.title)}">
+                    <img src="${thumbnail}" alt="${escapeHtml(blog.title)}">
                     <span><i class="far fa-calendar-alt"></i> ${new Date(blog.created_at).toLocaleDateString()}</span>
                 </div>
                 <div class="blog-text">
                     <span>By ${escapeHtml(blog.author)}</span>
                     <h2>${escapeHtml(blog.title)}</h2>
-                    <p>${escapeHtml(blog.content.substring(0, 150))}...</p>
+                    <p>${escapeHtml(excerpt)}</p>
                     <a href="blog.html?id=${blog.id}">Read More <i class="fas fa-arrow-right"></i></a>
                 </div>
             `;
             blogList.appendChild(div);
         });
 
+        // Pagination (unchanged)
         const totalPages = Math.ceil(data.total / 10);
         const pagination = document.getElementById('pagination');
         pagination.innerHTML = '';

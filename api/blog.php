@@ -31,6 +31,18 @@ if ($method === 'GET' && $action === 'list') {
     $stmt->bind_param("ii", $limit, $offset);
     $stmt->execute();
     $blogs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+     // ============================================================
+    // 🔥 ADD THUMBNAIL EXTRACTION HERE (after fetching, before echo)
+    // ============================================================
+    foreach ($blogs as &$blog) {
+        // Extract first image URL from Markdown content
+        preg_match('/!\[.*?\]\((.*?)\)/', $blog['content'], $matches);
+        $blog['thumbnail'] = $matches[1] ?? 'default-image.jpg';
+        
+        // Optional: Also create a plain text excerpt
+        $plainText = strip_tags($blog['content']);
+        $blog['excerpt'] = substr($plainText, 0, 150) . '...';
+    }
     echo json_encode(['blogs' => $blogs, 'total' => $total, 'page' => $page]);
     exit;
 }
