@@ -74,10 +74,22 @@ document.addEventListener('DOMContentLoaded', () => {
             logoutUser();
         });
     }
+    const deleteButtons = document.querySelectorAll('.delete-blog-btn');
+    deleteButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.getAttribute('href');
+            if (confirm('Are you sure you want to delete this blog post? This action cannot be undone.')) {
+                window.location.href = url;
+            }
+        });
+    });
 });
+
 
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
+

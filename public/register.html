@@ -125,6 +125,11 @@
             errorDiv.textContent = 'Password must be at least 6 characters.';
             return;
         }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!emailRegex.test(email)) {
+    errorDiv.textContent = 'Please enter a valid email address.';
+    return;
+}
 
         try {
             // ✅ Notice: We just write 'auth.php?action=register' (no ../api needed)
