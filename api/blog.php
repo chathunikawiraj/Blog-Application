@@ -4,12 +4,6 @@ require_once 'config.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $input = json_decode(file_get_contents('php://input'), true);
 
-// GET /api/blog.php?action=list&page=1
-// GET /api/blog.php?action=single&id=5
-// POST /api/blog.php (create) -> expects {title, content}
-// PUT /api/blog.php?id=5 (update) -> expects {title, content}
-// DELETE /api/blog.php?id=5
-
 $action = $_GET['action'] ?? '';
 
 // Public endpoints: list and single
@@ -31,17 +25,26 @@ if ($method === 'GET' && $action === 'list') {
     $stmt->bind_param("ii", $limit, $offset);
     $stmt->execute();
     $blogs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-     // ============================================================
-    // 🔥 ADD THUMBNAIL EXTRACTION HERE (after fetching, before echo)
+
+    // ============================================================
+    // Add thumbnail & excerpt, then escape for XSS prevention
     // ============================================================
     foreach ($blogs as &$blog) {
-        // Extract first image URL from Markdown content
+        // Extract thumbnail from Markdown
         preg_match('/!\[.*?\]\((.*?)\)/', $blog['content'], $matches);
         $blog['thumbnail'] = $matches[1] ?? 'default-image.jpg';
-        
-        // Optional: Also create a plain text excerpt
+
+        // Create plain‑text excerpt (strip Markdown-ish tags, but keep it simple)
         $plainText = strip_tags($blog['content']);
         $blog['excerpt'] = substr($plainText, 0, 150) . '...';
+
+        // ✅ ESCAPE ALL USER‑GENERATED FIELDS BEFORE OUTPUT
+        $blog['title']    = htmlspecialchars($blog['title'], ENT_QUOTES, 'UTF-8');
+        $blog['content']  = htmlspecialchars($blog['content'], ENT_QUOTES, 'UTF-8');
+        $blog['author']   = htmlspecialchars($blog['author'], ENT_QUOTES, 'UTF-8');
+        $blog['excerpt']  = htmlspecialchars($blog['excerpt'], ENT_QUOTES, 'UTF-8');
+        // thumbnail is a URL, not user‑supplied text, but we still escape it just in case
+        $blog['thumbnail'] = htmlspecialchars($blog['thumbnail'], ENT_QUOTES, 'UTF-8');
     }
     echo json_encode(['blogs' => $blogs, 'total' => $total, 'page' => $page]);
     exit;
@@ -59,6 +62,10 @@ if ($method === 'GET' && $action === 'single' && isset($_GET['id'])) {
     $stmt->execute();
     $blog = $stmt->get_result()->fetch_assoc();
     if ($blog) {
+        // ✅ ESCAPE BEFORE OUTPUT
+        $blog['title']   = htmlspecialchars($blog['title'], ENT_QUOTES, 'UTF-8');
+        $blog['content'] = htmlspecialchars($blog['content'], ENT_QUOTES, 'UTF-8');
+        $blog['author']  = htmlspecialchars($blog['author'], ENT_QUOTES, 'UTF-8');
         echo json_encode($blog);
     } else {
         http_response_code(404);
