@@ -12,9 +12,8 @@ async function loadBlog() {
         const container = document.getElementById('blogDetail');
         const user = getCurrentUser();
 
-        // ✅ Render Markdown content as HTML (using a simple approach)
-        // For proper Markdown rendering, include marked.js
-        const renderedContent = marked.parse(blog.content); // Will be plain text for now
+        // ✅ Render Markdown to HTML
+        const renderedContent = marked.parse(blog.content);
 
         container.innerHTML = `
             <div class="blog-content" style="background:#fff; padding:2rem; border-radius:12px; box-shadow:0 5px 30px rgba(0,0,0,0.08);">
@@ -28,7 +27,7 @@ async function loadBlog() {
                 </div>
                 <h1 style="font-family:'Playfair Display',serif; font-size:2.5rem; margin:1rem 0 0.5rem 0;">${escapeHtml(blog.title)}</h1>
                 <hr style="margin:1rem 0;">
-                <div style="font-size:1.1rem; line-height:1.8; white-space:pre-wrap;">${renderedContent}</div>
+                <div style="font-size:1.1rem; line-height:1.8;">${renderedContent}</div>
             </div>
         `;
 

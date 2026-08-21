@@ -3,44 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fashion.Design - Blog Post</title>
+    <title>Fashion.Design - Blog</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/app.js"></script>
+<style>
+    /* ===== FORCE HEADER TO BE COMPACT ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: #f5f0eb;
+        font-family: 'Quicksand', sans-serif;
+        min-height: 100vh;
+    }
+
+    /* ===== HEADER – MATCH HOME PAGE ===== */
+    header {
+        background: rgba(0, 0, 0, 0.7) !important;
+        padding: 1.2rem !important;
+        min-height: auto !important;
+        height: auto !important;
+        backdrop-filter: blur(5px) !important;
+        position: relative !important;
+    }
+
+    .banner {
+        display: none !important;
+    }
+
+    .navbar .container {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        max-width: 1320px !important;
+        margin: 0 auto !important;
+        padding: 0 1.2rem !important;
+    }
+
+    .navbar-brand {
+        color: #fff !important;
+        font-size: 2rem !important;
+        text-decoration: none !important;
+        font-family: 'Playfair Display', serif !important;
+        letter-spacing: 2px !important;
+    }
+
+    .navbar-brand span {
+        color: #c9a96e !important;
+    }
+
+    .navbar-nav {
+        display: flex !important;
+        align-items: center !important;
+        gap: 1rem !important;
+        flex-wrap: wrap !important;
+    }
+
+    .navbar-nav a {
+        text-transform: uppercase !important;
+        font-weight: 500 !important;
+        color: #fff !important;
+        text-decoration: none !important;
+        padding: 0.4rem 0.8rem !important;
+        letter-spacing: 2px !important;
+        transition: opacity 0.3s ease !important;
+        font-size: 0.9rem !important;
+    }
+
+    .navbar-nav a:hover {
+        opacity: 0.7 !important;
+        color: #c9a96e !important;
+    }
+
+    #usernameDisplay {
+        color: #c9a96e !important;
+        font-weight: 600 !important;
+    }
+
+    #logoutBtn {
+        color: #e74c3c !important;
+    }
+
+    /* ===== BLOG CONTENT ===== */
+    .blog-wrapper {
+        max-width: 900px !important;
+        margin: 2rem auto !important;
+        padding: 0 1.5rem !important;
+    }
+
+    .blog-card {
+        background: #fff !important;
+        border-radius: 16px !important;
+        padding: 2.5rem !important;
+        box-shadow: 0 4px 30px rgba(0,0,0,0.06) !important;
+    }
+
+    .blog-meta {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        margin-bottom: 1.5rem !important;
+        padding-bottom: 1rem !important;
+        border-bottom: 1px solid #f0ebe6 !important;
+    }
+
+    .blog-meta .author {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        font-weight: 600 !important;
+        color: #1a1a1a !important;
+    }
+
+    .blog-meta .author .avatar {
+        width: 36px !important;
+        height: 36px !important;
+        background: #c9a96e !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #fff !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+    }
+
+    .blog-meta .date {
+        color: #888 !important;
+        font-size: 0.85rem !important;
+    }
+
+    .blog-title {
+        font-family: 'Playfair Display', serif !important;
+        font-size: 2.8rem !important;
+        color: #1a1a1a !important;
+        margin-bottom: 1.5rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .blog-content {
+        font-size: 1.1rem !important;
+        line-height: 1.9 !important;
+        color: #333 !important;
+    }
+
+    .blog-content p {
+        margin-bottom: 1.2rem !important;
+    }
+
+    .blog-content img {
+        max-width: 100% !important;
+        height: auto !important;
+        border-radius: 12px !important;
+        margin: 1.5rem 0 !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important;
+    }
+
+    .back-wrapper {
+        text-align: center !important;
+        margin-top: 2rem !important;
+    }
+
+    .btn-back {
+        display: inline-block !important;
+        background: transparent !important;
+        color: #1a1a1a !important;
+        padding: 0.6rem 2rem !important;
+        border-radius: 30px !important;
+        text-decoration: none !important;
+        border: 1px solid #ddd !important;
+        transition: all 0.3s !important;
+        font-weight: 500 !important;
+    }
+
+    .btn-back:hover {
+        background: #1a1a1a !important;
+        color: #fff !important;
+        border-color: #1a1a1a !important;
+    }
+
+    .actions {
+        display: flex !important;
+        gap: 1rem !important;
+        margin-top: 2rem !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        padding-top: 1.5rem !important;
+        border-top: 1px solid #f0ebe6 !important;
+    }
+
+    .actions .btn-edit {
+        background: #1a1a1a !important;
+        color: #fff !important;
+        padding: 0.6rem 2rem !important;
+        border-radius: 30px !important;
+        text-decoration: none !important;
+        transition: 0.3s !important;
+        font-weight: 500 !important;
+    }
+
+    .actions .btn-edit:hover {
+        background: #c9a96e !important;
+    }
+
+    .actions .btn-delete {
+        background: #e74c3c !important;
+        color: #fff !important;
+        padding: 0.6rem 2rem !important;
+        border-radius: 30px !important;
+        border: none !important;
+        cursor: pointer !important;
+        transition: 0.3s !important;
+        font-weight: 500 !important;
+    }
+
+    .actions .btn-delete:hover {
+        background: #c0392b !important;
+    }
+
+    footer {
+        background: #1a1a1a !important;
+        color: #fff !important;
+        text-align: center !important;
+        padding: 2.5rem 0 !important;
+        margin-top: 3rem !important;
+    }
+
+    footer .social-links {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 0.8rem !important;
+        margin-bottom: 1.4rem !important;
+    }
+
+    footer .social-links a {
+        border: 2px solid rgba(255,255,255,0.3) !important;
+        color: rgba(255,255,255,0.7) !important;
+        width: 42px !important;
+        height: 42px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 50% !important;
+        text-decoration: none !important;
+        transition: 0.3s !important;
+    }
+
+    footer .social-links a:hover {
+        background: #c9a96e !important;
+        border-color: #c9a96e !important;
+        color: #fff !important;
+    }
+
+    footer span {
+        color: rgba(255,255,255,0.4) !important;
+        font-size: 0.95rem !important;
+        font-family: 'Playfair Display', serif !important;
+        letter-spacing: 2px !important;
+    }
+
+    @media (max-width: 768px) {
+        .navbar .container {
+            flex-direction: column !important;
+            gap: 0.8rem !important;
+        }
+        .navbar-nav {
+            justify-content: center !important;
+            gap: 0.5rem !important;
+        }
+        .navbar-nav a {
+            font-size: 0.8rem !important;
+            padding: 0.3rem 0.6rem !important;
+        }
+        .blog-wrapper {
+            padding: 0 1rem !important;
+        }
+        .blog-card {
+            padding: 1.5rem !important;
+            border-radius: 0 !important;
+        }
+        .blog-title {
+            font-size: 2rem !important;
+        }
+        .blog-content {
+            font-size: 1rem !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .blog-card {
+            padding: 1rem !important;
+        }
+        .blog-title {
+            font-size: 1.6rem !important;
+        }
+        .blog-meta {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 0.5rem !important;
+        }
+    }
+</style>
 </head>
 <body>
-    <!-- ===== NAVIGATION ===== -->
-    <header>
-        <nav class="navbar">
-            <div class="container">
-                <a href="index.html" class="navbar-brand">Fashion.Design</a>
-                <div class="navbar-nav">
-                    <a href="index.html">Home</a>
-                    <a href="editor.html" id="newPostLink" style="display:none;">New Post</a>
-                    <span id="authLinks">
-                        <a href="login.html">Login</a>
-                        <a href="register.html">Register</a>
-                    </span>
-                    <span id="userInfo" style="display:none;">
-                        <a href="#" id="usernameDisplay" style="color: #1abc9c;"></a>
-                        <a href="#" id="logoutBtn" style="color: #e74c3c;">Logout</a>
-                    </span>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <!-- ===== END NAVIGATION ===== -->
 
-    <!-- ===== BLOG DETAIL ===== -->
-    <section class="blog" id="blog" style="padding-top:2rem;">
+   <!-- ===== HEADER – MATCH HOME PAGE ===== -->
+<header>
+    <nav class="navbar">
         <div class="container">
-            <div id="blogDetail"></div>
-            <div style="margin-top:2rem; text-align:center;">
-                <a href="index.html" class="btn" style="background:#2b2b2b; color:#fff; padding:0.6rem 2rem; border-radius:30px; text-decoration:none;">← Back to Home</a>
+            <a href="index.html" class="navbar-brand">Fashion.<span>Design</span></a>
+            <div class="navbar-nav">
+                <a href="index.html">Home</a>
+                <a href="editor.html" id="newPostLink" style="display:none;">New Post</a>
+                <span id="authLinks">
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Register</a>
+                </span>
+                <span id="userInfo" style="display:none;">
+                    <a href="#" id="usernameDisplay"></a>
+                    <a href="#" id="logoutBtn" style="color:#e74c3c;">Logout</a>
+                </span>
             </div>
         </div>
-    </section>
-    <!-- ===== END BLOG DETAIL ===== -->
+    </nav>
+</header>
+
+    <!-- ===== BLOG CONTENT ===== -->
+    <div class="blog-wrapper">
+        <div class="blog-card" id="blogDetail">
+            <div style="text-align:center; padding:2rem;">
+                <i class="fas fa-spinner fa-spin" style="font-size:2rem; color:#c9a96e;"></i>
+                <p style="margin-top:1rem; color:#999;">Loading...</p>
+            </div>
+        </div>
+
+        <div class="back-wrapper">
+            <a href="index.html" class="btn-back">← Back to Home</a>
+        </div>
+    </div>
 
     <!-- ===== FOOTER ===== -->
     <footer>
@@ -52,9 +359,78 @@
         </div>
         <span>&copy; 2026 Fashion.Design Blog | All Rights Reserved</span>
     </footer>
-    <!-- ===== END FOOTER ===== -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/blog.js"></script>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        (async function() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const container = document.getElementById('blogDetail');
+
+            if (!id) {
+                container.innerHTML = '<p style="text-align:center; padding:2rem; color:#999;">No blog ID specified.</p>';
+                return;
+            }
+
+            try {
+                const blog = await fetchAPI(`blog.php?action=single&id=${id}`);
+                console.log('✅ Blog data:', blog);
+
+                if (blog.error) {
+                    container.innerHTML = `<p style="color:#e74c3c; text-align:center;">Error: ${blog.error}</p>`;
+                    return;
+                }
+
+                if (!blog.content) {
+                    container.innerHTML = '<p style="color:#999; text-align:center;">This blog has no content.</p>';
+                    return;
+                }
+
+                const renderedContent = marked.parse(blog.content);
+
+                container.innerHTML = `
+                    <div class="blog-meta">
+                        <span class="author">
+                            <span class="avatar">${blog.author.charAt(0).toUpperCase()}</span>
+                            ${escapeHtml(blog.author)}
+                        </span>
+                        <span class="date"><i class="far fa-calendar-alt"></i> ${new Date(blog.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    </div>
+                    <h1 class="blog-title">${escapeHtml(blog.title)}</h1>
+                    <div class="blog-content">${renderedContent}</div>
+                `;
+
+                const user = getCurrentUser();
+                if (user && user.id === blog.user_id) {
+                    const actions = document.createElement('div');
+                    actions.className = 'actions';
+                    actions.innerHTML = `
+                        <a href="editor.html?id=${blog.id}" class="btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                        <button id="deleteBtn" class="btn-delete"><i class="fas fa-trash-alt"></i> Delete</button>
+                    `;
+                    container.appendChild(actions);
+
+                    document.getElementById('deleteBtn').addEventListener('click', async () => {
+                        if (confirm('Delete this blog?')) {
+                            try {
+                                await fetchAPI(`blog.php?id=${blog.id}`, { method: 'DELETE' });
+                                window.location.href = 'index.html';
+                            } catch (err) {
+                                alert('Delete failed: ' + err.message);
+                            }
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error('❌ Error:', err);
+                container.innerHTML = `
+                    <p style="color:#e74c3c; text-align:center; padding:2rem;">
+                        <i class="fas fa-exclamation-circle" style="font-size:2rem; display:block; margin-bottom:1rem;"></i>
+                        Error: ${err.message}
+                    </p>
+                `;
+            }
+        })();
+    </script>
 </body>
 </html>

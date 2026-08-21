@@ -13,6 +13,7 @@
 <body>
     <!-- ===== HEADER ===== -->
     <header>
+        <!-- ✅ NAVIGATION (only nav links) -->
         <nav class="navbar">
             <div class="container">
                 <a href="index.html" class="navbar-brand">Fashion.<span>Design</span></a>
@@ -30,18 +31,23 @@
                 </div>
             </div>
         </nav>
+
+        <!-- ✅ BANNER (outside the nav) -->
         <div class="banner">
             <div class="container">
                 <h1 class="banner-title">
                     <span>Fashion.</span> Design Blog
                 </h1>
                 <p>everything that you want to know about fashion & design</p>
+                <a href="register.html" class="btn-get-started">
+                    Get Started <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </header>
     <!-- ===== END HEADER ===== -->
 
-    <!-- ===== DESIGN SECTION (Static - shows categories) ===== -->
+    <!-- ===== DESIGN SECTION ===== -->
     <section class="design" id="design">
         <div class="container">
             <div class="title">
@@ -97,25 +103,68 @@
     </section>
     <!-- ===== END BLOG LIST ===== -->
 
-    <!-- ===== ABOUT SECTION ===== -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-content">
-                <div>
-                    <img src="https://images.unsplash.com/photo-1501238295340-c810d3c156d5?w=600" alt="About">
+<!-- ===== ABOUT SECTION  ===== -->
+<section class="about" id="about">
+    <div class="container">
+        <div class="about-wrapper">
+            <!-- Section Header -->
+            <div class="about-header">
+                <span class="about-tag">About Us</span>
+                <h2 class="about-title">Fashion.<span>Design</span></h2>
+                <div class="about-divider">
+                    <span></span>
+                    <i class="fas fa-feather-alt"></i>
+                    <span></span>
                 </div>
-                <div class="about-text">
-                    <div class="title">
-                        <h2>About Fashion.Design</h2>
-                        <p>fashion & design is our passion</p>
+                <p class="about-subtitle">fashion &amp; design is our passion</p>
+            </div>
+
+            <!-- Content -->
+            <div class="about-body">
+                <p class="about-description">
+                    Welcome to <strong>Fashion.Design Blog</strong> – a vibrant community where creativity, 
+                    fashion, and design come together. Whether you're a designer, artist, or enthusiast, 
+                    this is your space to share inspiration, discover trends, and connect with like-minded 
+                    creatives.
+                </p>
+
+                <!-- Stats -->
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Blog Posts</span>
                     </div>
-                    <p>Welcome to Fashion.Design Blog – a vibrant community where creativity, fashion, and design come together. Whether you're a designer, artist, or enthusiast, this is your space to share inspiration, discover trends, and connect with like-minded creatives.</p>
-                    <p>Built with ❤️ using HTML, CSS, JavaScript, PHP & MySQL. Join us and start sharing your story today!</p>
+                    <div class="stat-item">
+                        <span class="stat-number">100+</span>
+                        <span class="stat-label">Community Members</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">2026</span>
+                        <span class="stat-label">Founded</span>
+                    </div>
+                </div>
+
+                <!-- Quote -->
+                <blockquote class="about-quote">
+                    <i class="fas fa-quote-left"></i>
+                    <p>Fashion is the armor to survive the reality of everyday life.</p>
+                    <cite>— Bill Cunningham</cite>
+                </blockquote>
+
+                <!-- CTA -->
+                <div class="about-cta">
+                    <p class="about-footer-text">
+                        Built with ❤️ using HTML, CSS, JavaScript, PHP &amp; MySQL. 
+                        Join us and start sharing your story today!
+                    </p>
+                    <a href="register.html" class="btn-about">
+                        Join the Community <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- ===== END ABOUT ===== -->
+    </div>
+</section>
 
     <!-- ===== FOOTER ===== -->
     <footer>
@@ -128,8 +177,9 @@
         <span>&copy; 2026 Fashion.Design Blog | All Rights Reserved</span>
     </footer>
     <!-- ===== END FOOTER ===== -->
+
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/home.js"></script>
+    <script src="js/home.js?v=2"></script>
 </body>
 </html>

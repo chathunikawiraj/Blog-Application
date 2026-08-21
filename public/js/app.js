@@ -4,6 +4,7 @@ async function fetchAPI(endpoint, options = {}) {
     const url = API_BASE + endpoint;
     const config = {
         headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(15000), // ✅ 15 second timeout
         ...options
     };
     if (options.body && typeof options.body === 'object') {

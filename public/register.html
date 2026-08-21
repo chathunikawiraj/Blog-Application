@@ -8,19 +8,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
+        /* ===== FULL-PAGE BACKGROUND ===== */
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('uploads/banner5.jpg') center/cover no-repeat fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        /* ===== OVERRIDE HEADER ===== */
+        header {
+            min-height: auto !important;
+            height: auto !important;
+            background: rgba(0, 0, 0, 0.7) !important;
+            backdrop-filter: blur(5px);
+        }
+
+        /* ===== HIDE THE LARGE BANNER ===== */
+        .banner {
+            display: none !important;
+        }
+
+        /* ===== CENTER THE FORM ===== */
+        .login-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
         .auth-container {
+            width: 100%;
             max-width: 450px;
-            margin: 3rem auto;
             padding: 2rem;
             background: #fff;
             border-radius: 12px;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
+
         .auth-container h2 {
             font-family: 'Playfair Display', serif;
             text-align: center;
             margin-bottom: 1.5rem;
+            color: #2b2b2b;
         }
+
         .auth-container input {
             width: 100%;
             padding: 0.8rem 1rem;
@@ -29,11 +65,15 @@
             border-radius: 8px;
             font-size: 1rem;
             transition: border 0.3s;
+            background: #fafafa;
         }
+
         .auth-container input:focus {
-            border-color: #2b2b2b;
+            border-color: #c9a96e;
             outline: none;
+            background: #fff;
         }
+
         .auth-container .btn-submit {
             width: 100%;
             background: #2b2b2b;
@@ -45,25 +85,41 @@
             cursor: pointer;
             transition: 0.3s;
         }
+
         .auth-container .btn-submit:hover {
-            background: #555;
+            background: #c9a96e;
         }
+
         .auth-container .auth-link {
             text-align: center;
             margin-top: 1rem;
         }
+
         .auth-container .auth-link a {
             color: #2b2b2b;
             font-weight: 600;
+            text-decoration: none;
         }
+
+        .auth-container .auth-link a:hover {
+            color: #c9a96e;
+        }
+
         #registerError {
             color: #e74c3c;
             text-align: center;
             margin-top: 0.5rem;
         }
+
+        footer {
+            margin-top: auto;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
     </style>
 </head>
 <body>
+    <!-- ===== HEADER / NAVIGATION ===== -->
     <header>
         <nav class="navbar">
             <div class="container">
@@ -77,7 +133,8 @@
         </nav>
     </header>
 
-    <section class="blog" style="padding-top:2rem; padding-bottom:4rem;">
+    <!-- ===== REGISTER FORM - CENTERED ===== -->
+    <section class="login-section" style="display:flex; align-items:center; justify-content:center; min-height:70vh; padding:2rem 0;">
         <div class="container">
             <div class="auth-container">
                 <h2>Join Fashion.Design</h2>
@@ -96,6 +153,7 @@
         </div>
     </section>
 
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="social-links">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -106,44 +164,52 @@
         <span>&copy; 2026 Fashion.Design Blog | All Rights Reserved</span>
     </footer>
 
-<script src="js/app.js"></script>
-<script>
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const confirm = document.getElementById('confirm').value;
-        const errorDiv = document.getElementById('registerError');
-        errorDiv.textContent = '';
+    <script src="js/app.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm').value;
+            const errorDiv = document.getElementById('registerError');
+            const submitBtn = document.querySelector('.btn-submit');
+            errorDiv.textContent = '';
 
-        if (password !== confirm) {
-            errorDiv.textContent = 'Passwords do not match.';
-            return;
-        }
-        if (password.length < 6) {
-            errorDiv.textContent = 'Password must be at least 6 characters.';
-            return;
-        }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-if (!emailRegex.test(email)) {
-    errorDiv.textContent = 'Please enter a valid email address.';
-    return;
-}
+            // Client-side validation
+            if (password !== confirm) {
+                errorDiv.textContent = 'Passwords do not match.';
+                return;
+            }
+            if (password.length < 6) {
+                errorDiv.textContent = 'Password must be at least 6 characters.';
+                return;
+            }
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorDiv.textContent = 'Please enter a valid email address.';
+                return;
+            }
 
-        try {
-            // ✅ Notice: We just write 'auth.php?action=register' (no ../api needed)
-            const data = await fetchAPI('auth.php?action=register', {
-                method: 'POST',
-                body: { username, email, password } // ❌ DO NOT use JSON.stringify here, app.js handles it!
-            });
-            
-            alert('Registration successful! Please login.');
-            window.location.href = 'login.html';
-        } catch (err) {
-            errorDiv.textContent = err.message || 'Registration failed. Username or email may already exist.';
-        }
-    });
-</script>
+            try {
+                submitBtn.textContent = 'Creating Account...';
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.7';
+
+                const data = await fetchAPI('auth.php?action=register', {
+                    method: 'POST',
+                    body: { username, email, password }
+                });
+                
+                alert('Registration successful! Please login.');
+                window.location.href = 'login.html';
+            } catch (err) {
+                submitBtn.textContent = 'Create Account';
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                errorDiv.textContent = err.message || 'Registration failed. Username or email may already exist.';
+            }
+        });
+    </script>
 </body>
 </html>

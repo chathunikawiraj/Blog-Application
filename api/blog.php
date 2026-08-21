@@ -50,8 +50,20 @@ if ($method === 'GET' && $action === 'list') {
     exit;
 }
 
+// ===== SINGLE BLOG – WITH CACHING =====
 if ($method === 'GET' && $action === 'single' && isset($_GET['id'])) {
     $id = (int)$_GET['id'];
+    
+    // ✅ Check cache
+    $cacheFile = "cache/blog_{$id}.json";
+    if (file_exists($cacheFile) && time() - filemtime($cacheFile) < 300) {
+        // Cache is fresh (less than 5 minutes old)
+        header('Content-Type: application/json');
+        echo file_get_contents($cacheFile);
+        exit;
+    }
+    
+    // ✅ Fetch from database
     $stmt = $conn->prepare("
         SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.username as author, u.id as user_id
         FROM blogPost b
@@ -61,11 +73,19 @@ if ($method === 'GET' && $action === 'single' && isset($_GET['id'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $blog = $stmt->get_result()->fetch_assoc();
+    
     if ($blog) {
-        // ✅ ESCAPE BEFORE OUTPUT
+        // Escape output
         $blog['title']   = htmlspecialchars($blog['title'], ENT_QUOTES, 'UTF-8');
         $blog['content'] = htmlspecialchars($blog['content'], ENT_QUOTES, 'UTF-8');
         $blog['author']  = htmlspecialchars($blog['author'], ENT_QUOTES, 'UTF-8');
+        
+        // ✅ Save to cache
+        if (!is_dir('cache')) {
+            mkdir('cache', 0777, true);
+        }
+        file_put_contents($cacheFile, json_encode($blog));
+        
         echo json_encode($blog);
     } else {
         http_response_code(404);

@@ -8,52 +8,277 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== FULL-PAGE BACKGROUND ===== */
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                        url('uploads/banner5.jpg') center/cover no-repeat fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        /* ===== COMPACT HEADER ===== */
+        header {
+            min-height: auto !important;
+            height: auto !important;
+            background: rgba(0, 0, 0, 0.7) !important;
+            backdrop-filter: blur(5px);
+        }
+        .banner {
+            display: none !important;
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 0 1.2rem;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-size: 2rem;
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+        }
+        .navbar-brand span {
+            color: #c9a96e;
+        }
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .navbar-nav a {
+            text-transform: uppercase;
+            font-weight: 500;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            letter-spacing: 2px;
+            transition: opacity 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .navbar-nav a:hover {
+            opacity: 0.7;
+            color: #c9a96e;
+        }
+        #usernameDisplay {
+            color: #c9a96e;
+            font-weight: 600;
+        }
+        #logoutBtn {
+            color: #e74c3c;
+        }
+
+        /* ===== CENTER EDITOR FORM ===== */
+        .editor-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .editor-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .editor-container .title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .editor-container .title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #2b2b2b;
+        }
+
+        .editor-container .title p {
+            color: #888;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .editor-container input,
+        .editor-container textarea {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+            background: #fafafa;
+        }
+
+        .editor-container input:focus,
+        .editor-container textarea:focus {
+            border-color: #c9a96e;
+            outline: none;
+            background: #fff;
+        }
+
+        .editor-container .form-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .editor-container .btn-save {
+            background: #2b2b2b;
+            color: #fff;
+            padding: 0.8rem 2.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .editor-container .btn-save:hover {
+            background: #c9a96e;
+            transform: scale(1.02);
+        }
+
+        .editor-container .btn-cancel {
+            background: #ddd;
+            color: #333;
+            padding: 0.8rem 2.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .editor-container .btn-cancel:hover {
+            background: #ccc;
+        }
+
+        footer {
+            margin-top: auto;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+        footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        footer .social-links a {
+            border: 2px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.7);
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        footer .social-links a:hover {
+            background: #c9a96e;
+            border-color: #c9a96e;
+            color: #fff;
+        }
+        footer span {
+            color: rgba(255,255,255,0.4);
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .navbar-nav {
+                justify-content: center;
+            }
+            .editor-container {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+            .editor-container .title h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .editor-container {
+                padding: 1rem;
+                margin: 0 0.5rem;
+            }
+            .editor-container .title h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- ===== NAVIGATION ===== -->
+
+    <!-- ===== HEADER ===== -->
     <header>
         <nav class="navbar">
             <div class="container">
-                <a href="index.html" class="navbar-brand">Fashion.Design</a>
+                <a href="index.html" class="navbar-brand">Fashion.<span>Design</span></a>
                 <div class="navbar-nav">
                     <a href="index.html">Home</a>
-                    <a href="editor.html" id="newPostLink">New Post</a>
+                    <a href="editor.html" id="newPostLink" style="display:none;">New Post</a>
                     <span id="authLinks">
                         <a href="login.html">Login</a>
                         <a href="register.html">Register</a>
                     </span>
                     <span id="userInfo" style="display:none;">
-                        <a href="#" id="usernameDisplay" style="color: #1abc9c;"></a>
-                        <a href="#" id="logoutBtn" style="color: #e74c3c;">Logout</a>
+                        <a href="#" id="usernameDisplay"></a>
+                        <a href="#" id="logoutBtn">Logout</a>
                     </span>
                 </div>
             </div>
         </nav>
     </header>
-    <!-- ===== END NAVIGATION ===== -->
 
-    <!-- ===== EDITOR FORM ===== -->
-    <section class="blog" id="blog" style="padding-top:2rem;">
-        <div class="container">
+    <!-- ===== EDITOR FORM - CENTERED ===== -->
+    <section class="editor-section">
+        <div class="editor-container">
             <div class="title">
                 <h2 id="editorTitle">Create New Blog</h2>
                 <p>share your thoughts with the world</p>
             </div>
-            <form id="blogForm" style="max-width:900px; margin:0 auto;">
-                <div style="margin-bottom:1.5rem;">
-                    <input type="text" id="titleInput" placeholder="Blog Title" required style="width:100%; padding:0.8rem 1.2rem; font-size:1.2rem; border:2px solid #ddd; border-radius:8px;">
-                </div>
-                <div style="margin-bottom:1.5rem;">
-                    <textarea id="markdownEditor"></textarea>
-                </div>
-                <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
-                    <button type="submit" id="saveBtn" style="background:#2b2b2b; color:#fff; padding:0.7rem 2.5rem; border:none; border-radius:30px; font-size:1rem; cursor:pointer; transition:0.3s;">Save</button>
-                    <button type="button" id="cancelBtn" style="background:#ddd; color:#333; padding:0.7rem 2.5rem; border:none; border-radius:30px; font-size:1rem; cursor:pointer; transition:0.3s;">Cancel</button>
+            <form id="blogForm">
+                <input type="text" id="titleInput" placeholder="Blog Title" required>
+                <textarea id="markdownEditor" rows="10"></textarea>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" id="saveBtn">Save</button>
+                    <button type="button" class="btn-cancel" id="cancelBtn">Cancel</button>
                 </div>
             </form>
         </div>
     </section>
-    <!-- ===== END EDITOR ===== -->
 
     <!-- ===== FOOTER ===== -->
     <footer>
@@ -65,7 +290,6 @@
         </div>
         <span>&copy; 2026 Fashion.Design Blog | All Rights Reserved</span>
     </footer>
-    <!-- ===== END FOOTER ===== -->
 
     <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
     <script src="js/app.js"></script>

@@ -1,4 +1,4 @@
-console.log("✅ home.js loaded!");
+console.log("✅ home.js loaded (v2)!");
 
 async function loadBlogs(page = 1) {
     console.log("📡 Fetching page:", page);
@@ -22,10 +22,10 @@ async function loadBlogs(page = 1) {
             const div = document.createElement('div');
             div.className = 'blog-item';
 
-            // ✅ Use the thumbnail from the API (first image extracted)
+            // ✅ Use thumbnail from API
             const thumbnail = blog.thumbnail || 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600';
             
-            // ✅ Use the excerpt from the API (plain text, no Markdown)
+            // ✅ Use excerpt from API (clean, no Markdown)
             const excerpt = blog.excerpt || blog.content.substring(0, 150) + '...';
 
             div.innerHTML = `
@@ -43,7 +43,7 @@ async function loadBlogs(page = 1) {
             blogList.appendChild(div);
         });
 
-        // Pagination (unchanged)
+        // Pagination
         const totalPages = Math.ceil(data.total / 10);
         const pagination = document.getElementById('pagination');
         pagination.innerHTML = '';
