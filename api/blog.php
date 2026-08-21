@@ -26,44 +26,42 @@ if ($method === 'GET' && $action === 'list') {
     $stmt->execute();
     $blogs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-    // ============================================================
     // Add thumbnail & excerpt, then escape for XSS prevention
-    // ============================================================
     foreach ($blogs as &$blog) {
         // Extract thumbnail from Markdown
         preg_match('/!\[.*?\]\((.*?)\)/', $blog['content'], $matches);
         $blog['thumbnail'] = $matches[1] ?? 'default-image.jpg';
 
-        // Create plain‑text excerpt (strip Markdown-ish tags, but keep it simple)
+        // Create plain‑text excerpt 
         $plainText = strip_tags($blog['content']);
         $blog['excerpt'] = substr($plainText, 0, 150) . '...';
 
-        // ✅ ESCAPE ALL USER‑GENERATED FIELDS BEFORE OUTPUT
+        // ESCAPE ALL USER‑GENERATED FIELDS BEFORE OUTPUT
         $blog['title']    = htmlspecialchars($blog['title'], ENT_QUOTES, 'UTF-8');
         $blog['content']  = htmlspecialchars($blog['content'], ENT_QUOTES, 'UTF-8');
         $blog['author']   = htmlspecialchars($blog['author'], ENT_QUOTES, 'UTF-8');
         $blog['excerpt']  = htmlspecialchars($blog['excerpt'], ENT_QUOTES, 'UTF-8');
-        // thumbnail is a URL, not user‑supplied text, but we still escape it just in case
+        // thumbnail is a URL, not user‑supplied text
         $blog['thumbnail'] = htmlspecialchars($blog['thumbnail'], ENT_QUOTES, 'UTF-8');
     }
     echo json_encode(['blogs' => $blogs, 'total' => $total, 'page' => $page]);
     exit;
 }
 
-// ===== SINGLE BLOG – WITH CACHING =====
+//SINGLE BLOG – WITH CACHING
 if ($method === 'GET' && $action === 'single' && isset($_GET['id'])) {
     $id = (int)$_GET['id'];
     
-    // ✅ Check cache
+    // Check cache
     $cacheFile = "cache/blog_{$id}.json";
     if (file_exists($cacheFile) && time() - filemtime($cacheFile) < 300) {
-        // Cache is fresh (less than 5 minutes old)
+        // Cache is fresh
         header('Content-Type: application/json');
         echo file_get_contents($cacheFile);
         exit;
     }
     
-    // ✅ Fetch from database
+    //Fetch from database
     $stmt = $conn->prepare("
         SELECT b.id, b.title, b.content, b.created_at, b.updated_at, u.username as author, u.id as user_id
         FROM blogPost b
@@ -80,7 +78,7 @@ if ($method === 'GET' && $action === 'single' && isset($_GET['id'])) {
         $blog['content'] = htmlspecialchars($blog['content'], ENT_QUOTES, 'UTF-8');
         $blog['author']  = htmlspecialchars($blog['author'], ENT_QUOTES, 'UTF-8');
         
-        // ✅ Save to cache
+        //Save to cache
         if (!is_dir('cache')) {
             mkdir('cache', 0777, true);
         }
@@ -94,7 +92,7 @@ if ($method === 'GET' && $action === 'single' && isset($_GET['id'])) {
     exit;
 }
 
-// Protected endpoints (require login)
+// Protected endpoints 
 if (!isLoggedIn()) {
     http_response_code(401);
     echo json_encode(['error' => 'Unauthorized']);

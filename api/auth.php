@@ -3,7 +3,7 @@ require_once 'config.php';
 
 $action = $_GET['action'] ?? '';
 
-// === REGISTER ===
+// REGISTER 
 if ($action === 'register') {
     $data = json_decode(file_get_contents('php://input'), true);
     $username = $data['username'] ?? '';
@@ -30,7 +30,7 @@ if ($action === 'register') {
     exit;
 }
 
-// === LOGIN (FIXED – includes 'id') ===
+// LOGIN
 if ($action === 'login') {
     $data = json_decode(file_get_contents('php://input'), true);
     $email = $data['email'] ?? '';
@@ -58,7 +58,7 @@ if ($action === 'login') {
     exit;
 }
 
-// === LOGOUT ===
+// LOGOUT
 if ($action === 'logout') {
     session_destroy();
     echo json_encode(['message' => 'Logged out']);

@@ -1,4 +1,4 @@
-/* ===== GOOGLE FONTS ===== */
+/*GOOGLE FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 :root {
@@ -33,7 +33,7 @@ img {
     padding: 0 1.2rem;
 }
 
-/* ===== HEADER / NAV ===== */
+/* HEADER / NAV */
 header {
     min-height: 100vh;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
@@ -96,7 +96,7 @@ header {
     font-weight: 600;
 }
 
-/* ===== BANNER ===== */
+/*BANNER*/
 .banner {
     flex: 1;
     display: flex;
@@ -153,7 +153,7 @@ header {
     cursor: pointer;
 }
 
-/* ===== DESIGN SECTION ===== */
+/*DESIGN SECTION*/
 .design {
     padding: 4.5rem 0;
     background: var(--light-pink);
@@ -252,7 +252,7 @@ header {
     color: var(--gold);
 }
 
-/* ===== BLOG SECTION ===== */
+/*BLOG SECTION*/
 .blog {
     padding: 4.5rem 0;
     background: #fff;
@@ -352,7 +352,7 @@ header {
     transform: translateX(5px);
 }
 
-/* ===== ABOUT ===== */
+/*ABOUT*/
 .about {
     padding: 4.5rem 0;
     background: var(--light-pink);
@@ -388,7 +388,7 @@ header {
     line-height: 1.8;
 }
 
-/* ===== FOOTER ===== */
+/*FOOTER*/
 footer {
     background: var(--exDark);
     color: #fff;
@@ -430,7 +430,7 @@ footer span {
     color: #aaa;
 }
 
-/* ===== RESPONSIVE ===== */
+/*RESPONSIVE*/
 @media (max-width: 992px) {
     .about-content {
         grid-template-columns: 1fr;
@@ -481,7 +481,7 @@ footer span {
         gap: 0.3rem;
     }
 }
-/* ===== LOGIN / REGISTER PAGE FIX ===== */
+/*LOGIN / REGISTER PAGE*/
 .auth-container {
     min-height: 60vh;
     display: flex;
@@ -494,7 +494,7 @@ footer span {
     width: 100%;
     max-width: 450px;
 }
-/* ===== GET STARTED BUTTON ===== */
+/* GET STARTED BUTTON*/
 .btn-get-started {
     display: inline-block;
     margin-top: 1.5rem;
@@ -525,7 +525,7 @@ footer span {
 .btn-get-started:hover i {
     transform: translateX(5px);
 }
-/* ===== FULL-WIDTH BLOG PAGE ===== */
+/* FULL-WIDTH BLOG PAGE */
 .blog .container {
     max-width: 100% !important;
     padding: 0 2rem !important;
@@ -545,7 +545,7 @@ footer span {
     }
 }
 
-/* ===== FULL WIDTH – NO LEFT PADDING ===== */
+/* FULL WIDTH – NO LEFT PADDING */
 .blog-section {
     padding: 0 !important;
     max-width: 100% !important;
@@ -576,7 +576,7 @@ footer span {
         padding: 2rem 3rem !important;
     }
 }
-/* ===== FORCE BLOG PAGE FULL WIDTH ===== */
+/* FORCE BLOG PAGE FULL WIDTH */
 body .blog-section #blogDetail {
     max-width: 100% !important;
     margin: 0 !important;
@@ -604,13 +604,13 @@ body .blog-section #blogDetail .blog-content .body {
     max-width: 100% !important;
 }
 
-/* ===== ENHANCED ABOUT SECTION ===== */
+/* ENHANCED ABOUT SECTION */
 .about {
     padding: 5rem 0;
     background: var(--light-pink);
 }
 
-/* ===== ABOUT SECTION - NO IMAGE ===== */
+/*  ABOUT SECTION - NO IMAGE */
 .about-content {
     display: flex;
     justify-content: center;
@@ -709,7 +709,7 @@ body .blog-section #blogDetail .blog-content .body {
     color: var(--gold);
 }
 
-/* ===== STATS ===== */
+/* STATS */
 .about-stats {
     display: flex;
     gap: 2rem;
@@ -741,7 +741,7 @@ body .blog-section #blogDetail .blog-content .body {
     letter-spacing: 1px;
 }
 
-/* ===== QUOTE ===== */
+/* QUOTE*/
 .about-quote {
     font-family: 'Playfair Display', serif;
     font-size: 1.2rem;
@@ -769,7 +769,7 @@ body .blog-section #blogDetail .blog-content .body {
     margin-bottom: 1.5rem;
 }
 
-/* ===== ABOUT BUTTON ===== */
+/* ABOUT BUTTON */
 .btn-about {
     display: inline-block;
     background: var(--gold);
@@ -789,7 +789,7 @@ body .blog-section #blogDetail .blog-content .body {
     box-shadow: 0 8px 30px rgba(201, 169, 110, 0.4);
 }
 
-/* ===== RESPONSIVE ABOUT ===== */
+/*RESPONSIVE ABOUT*/
 @media (max-width: 992px) {
     .about-content {
         grid-template-columns: 1fr;
@@ -846,7 +846,7 @@ body .blog-section #blogDetail .blog-content .body {
     }
 }
 
-/* ===== ABOUT SECTION - PROFESSIONAL ===== */
+/* ABOUT SECTION - PROFESSIONAL*/
 .about {
     padding: 5rem 0;
     background: #f8f3ef;
@@ -858,7 +858,7 @@ body .blog-section #blogDetail .blog-content .body {
     text-align: center;
 }
 
-/* ===== HEADER ===== */
+/* HEADER*/
 .about-tag {
     display: inline-block;
     background: rgba(201, 169, 110, 0.15);
@@ -910,7 +910,7 @@ body .blog-section #blogDetail .blog-content .body {
     font-size: 0.85rem;
 }
 
-/* ===== BODY ===== */
+/* BODY*/
 .about-body {
     margin-top: 2.5rem;
 }
@@ -927,7 +927,7 @@ body .blog-section #blogDetail .blog-content .body {
     color: #c9a96e;
 }
 
-/* ===== STATS ===== */
+/*STATS*/
 .about-stats {
     display: flex;
     justify-content: center;
@@ -955,7 +955,7 @@ body .blog-section #blogDetail .blog-content .body {
     letter-spacing: 1.5px;
 }
 
-/* ===== QUOTE ===== */
+/*QUOTE*/
 .about-quote {
     max-width: 700px;
     margin: 0 auto 2.5rem;
@@ -989,7 +989,7 @@ body .blog-section #blogDetail .blog-content .body {
     margin-top: 0.5rem;
 }
 
-/* ===== CTA ===== */
+/*CTA*/
 .about-cta {
     margin-top: 1rem;
 }
@@ -1029,7 +1029,7 @@ body .blog-section #blogDetail .blog-content .body {
     transform: translateX(5px);
 }
 
-/* ===== RESPONSIVE ===== */
+/*RESPONSIVE*/
 @media (max-width: 768px) {
     .about {
         padding: 3rem 0;

@@ -12,7 +12,7 @@ async function loadBlog() {
         const container = document.getElementById('blogDetail');
         const user = getCurrentUser();
 
-        // ✅ Render Markdown to HTML
+        // Render Markdown to HTML
         const renderedContent = marked.parse(blog.content);
 
         container.innerHTML = `

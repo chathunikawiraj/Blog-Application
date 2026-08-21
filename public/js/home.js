@@ -22,10 +22,10 @@ async function loadBlogs(page = 1) {
             const div = document.createElement('div');
             div.className = 'blog-item';
 
-            // ✅ Use thumbnail from API
+            // Use thumbnail from API
             const thumbnail = blog.thumbnail || 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600';
             
-            // ✅ Use excerpt from API (clean, no Markdown)
+            // Use excerpt from API (clean, no Markdown)
             const excerpt = blog.excerpt || blog.content.substring(0, 150) + '...';
 
             div.innerHTML = `
