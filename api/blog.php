@@ -9,7 +9,16 @@ $action = $_GET['action'] ?? '';
 // Public endpoints: list and single
 if ($method === 'GET' && $action === 'list') {
     $page = (int)($_GET['page'] ?? 1);
-    $limit = 10;
+    
+    // Cache the list by page
+    $cacheFile = "cache/blog_list_page_{$page}.json";
+    if (file_exists($cacheFile) && time() - filemtime($cacheFile) < 3600) { // 1 hour cache
+        header('Content-Type: application/json');
+        echo file_get_contents($cacheFile);
+        exit;
+    }
+    
+    $limit = 4; // Or your preferred limit
     $offset = ($page - 1) * $limit;
 
     $countResult = $conn->query("SELECT COUNT(*) as total FROM blogPost");
@@ -26,25 +35,27 @@ if ($method === 'GET' && $action === 'list') {
     $stmt->execute();
     $blogs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-    // Add thumbnail & excerpt, then escape for XSS prevention
     foreach ($blogs as &$blog) {
-        // Extract thumbnail from Markdown
         preg_match('/!\[.*?\]\((.*?)\)/', $blog['content'], $matches);
         $blog['thumbnail'] = $matches[1] ?? 'default-image.jpg';
-
-        // Create plain‑text excerpt 
         $plainText = strip_tags($blog['content']);
         $blog['excerpt'] = substr($plainText, 0, 150) . '...';
-
-        // ESCAPE ALL USER‑GENERATED FIELDS BEFORE OUTPUT
-        $blog['title']    = htmlspecialchars($blog['title'], ENT_QUOTES, 'UTF-8');
-        $blog['content']  = htmlspecialchars($blog['content'], ENT_QUOTES, 'UTF-8');
-        $blog['author']   = htmlspecialchars($blog['author'], ENT_QUOTES, 'UTF-8');
-        $blog['excerpt']  = htmlspecialchars($blog['excerpt'], ENT_QUOTES, 'UTF-8');
-        // thumbnail is a URL, not user‑supplied text
+        $blog['title'] = htmlspecialchars($blog['title'], ENT_QUOTES, 'UTF-8');
+        $blog['content'] = htmlspecialchars($blog['content'], ENT_QUOTES, 'UTF-8');
+        $blog['author'] = htmlspecialchars($blog['author'], ENT_QUOTES, 'UTF-8');
+        $blog['excerpt'] = htmlspecialchars($blog['excerpt'], ENT_QUOTES, 'UTF-8');
         $blog['thumbnail'] = htmlspecialchars($blog['thumbnail'], ENT_QUOTES, 'UTF-8');
     }
-    echo json_encode(['blogs' => $blogs, 'total' => $total, 'page' => $page]);
+    
+    $response = json_encode(['blogs' => $blogs, 'total' => $total, 'page' => $page]);
+    
+    // Save to cache
+    if (!is_dir('cache')) {
+        mkdir('cache', 0777, true);
+    }
+    file_put_contents($cacheFile, $response);
+    
+    echo $response;
     exit;
 }
 
@@ -54,7 +65,7 @@ if ($method === 'GET' && $action === 'single' && isset($_GET['id'])) {
     
     // Check cache
     $cacheFile = "cache/blog_{$id}.json";
-    if (file_exists($cacheFile) && time() - filemtime($cacheFile) < 300) {
+    if (file_exists($cacheFile) && time() - filemtime($cacheFile) < 3600) {
         // Cache is fresh
         header('Content-Type: application/json');
         echo file_get_contents($cacheFile);
