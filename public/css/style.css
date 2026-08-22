@@ -1098,4 +1098,30 @@ body .blog-section #blogDetail .blog-content .body {
         padding: 0.8rem;
     }
 }
+.btn-show-more {
+    display: inline-block;
+    background: #2b2b2b;
+    color: #fff;
+    padding: 0.8rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
 
+.btn-show-more i {
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-show-more:hover {
+    background: #c9a96e;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(201, 169, 110, 0.3);
+}
+
+.btn-show-more:hover i {
+    transform: translateX(5px);
+}

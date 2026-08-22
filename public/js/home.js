@@ -23,8 +23,7 @@ async function loadBlogs(page = 1) {
             div.className = 'blog-item';
 
             // Use thumbnail from API
-            const thumbnail = blog.thumbnail || 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600';
-            
+const thumbnail = blog.thumbnail ? '/blog-app' + blog.thumbnail : 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600';            
             // Use excerpt from API (clean, no Markdown)
             const excerpt = blog.excerpt || blog.content.substring(0, 150) + '...';
 

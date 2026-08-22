@@ -1,11 +1,14 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('max_execution_time', 300); // 5 minutes
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
 // Load environment variables from .env file 
-$env = file(__DIR__ . '/../.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$env = file(__DIR__ . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 foreach ($env as $line) {
     // Only process lines that actually contain an equals sign
     if (strpos($line, '=') !== false) {

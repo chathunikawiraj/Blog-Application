@@ -1,10 +1,9 @@
 const API_BASE = '/blog-app/api/';
-
 async function fetchAPI(endpoint, options = {}) {
     const url = API_BASE + endpoint;
     const config = {
         headers: { 'Content-Type': 'application/json' },
-        signal: AbortSignal.timeout(15000), // ✅ 15 second timeout
+        //signal: AbortSignal.timeout(30000), // 30 second timeout
         ...options
     };
     if (options.body && typeof options.body === 'object') {
